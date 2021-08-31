@@ -41,6 +41,6 @@ button {
     cursor: pointer;
 }
 
-.equals {
+#buttonEquals {
     width: 304px;
 }
