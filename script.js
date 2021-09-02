@@ -1,18 +1,18 @@
 function add(a, b){
     return a + b;
-}
+};
 
 function subtract(a, b){
     return a - b;
-}
+};
 
 function multiply(a, b){
     return a * b;
-}
+};
 
 function divide(a, b){
     return a / b;
-}
+};
 
 function operate(operator, a, b){
     let result = 0;
@@ -30,111 +30,37 @@ function operate(operator, a, b){
             result = divide(a, b);
     }
     return result;
-}
-let lastDigitClicked = "";
-let displayContent= "";
-let numbersTyped = [];
-let operator = "";
+};
+
+// Need to add a way to correctly enter numbers with dec point
+// 
+
+function evaluateClick(id) {
+    switch (id) {
+        case "buttonOne":
+        case "buttonTwo":
+        case "buttonThree":
+        case "buttonFour":
+        case "buttonFive":
+        case "buttonSix":
+        case "buttonSeven":
+        case "buttonEight":
+        case "buttonNine":
+        case "buttonZero":
+        case "buttonDecPoint":
+            let digitClicked = document.getElementById(id);
+            currentBuffer += digitClicked.textContent;
+            currentNumber = parseFloat(currentBuffer);
+            displayContent.textContent = currentNumber;
+            console.log(currentBuffer, currentNumber);
+            break;
+    };
+};
+
+let currentNumber = 0;
+let currentBuffer = "";
+let displayContent = document.querySelector(".display");
 let buttons = document.querySelector('.buttons');
-let display = document.querySelector('.display');
 buttons.addEventListener('click', (e) => {
-    switch (e.target.id) {
-        case 'buttonOne':
-            lastDigitClicked = "1";
-            break;
-        case 'buttonTwo':
-            lastDigitClicked = "2";
-            break;
-        case 'buttonThree':
-            lastDigitClicked = "3";
-            break;
-        case 'buttonFour':
-            lastDigitClicked = "4";
-            break;
-        case 'buttonFive':
-            lastDigitClicked = "5";
-            break;
-        case 'buttonSix':
-            lastDigitClicked = "6";
-            break;
-        case 'buttonSeven':
-            lastDigitClicked = "7";
-            break;
-        case 'buttonEight':
-            lastDigitClicked = "8";
-            break;
-        case 'buttonNine':
-            lastDigitClicked = "9";
-            break;
-        case 'buttonZero':
-            lastDigitClicked = "0";
-            break;
-        case 'buttonClear':
-            displayContent = "";
-            lastDigitClicked = "";
-            numbersTyped = [];
-            break;
-        case 'buttonAdd':
-            numbersTyped.push(displayContent);
-            displayContent = "+";
-            lastDigitClicked = "";
-            if (numbersTyped.length == 2) {
-                let a = parseInt(numbersTyped[0], 10);
-                let b = parseInt(numbersTyped[1], 10);
-                console.log(a, b);
-                displayContent = operate(operator, a, b);
-                console.log(displayContent);
-                numbersTyped = [];
-                numbersTyped.push(displayContent);
-                console.log(numbersTyped, displayContent);
-            }
-            operator = "add";
-            break;
-        case 'buttonSub':
-            numbersTyped.push(displayContent);
-            displayContent = "-";
-            lastDigitClicked = "";
-            if (numbersTyped.length == 2) {
-                let a = parseInt(numbersTyped[0], 10);
-                let b = parseInt(numbersTyped[1], 10);
-                console.log(a, b);
-                displayContent = operate(operator, a, b);
-                console.log(displayContent);
-                numbersTyped = [];
-            }
-            operator = "subtract";
-            break;
-        case 'buttonMulty':
-            numbersTyped.push(displayContent);
-            displayContent = "*";
-            lastDigitClicked = "";
-            if (numbersTyped.length == 2) {
-                let a = parseInt(numbersTyped[0], 10);
-                let b = parseInt(numbersTyped[1], 10);
-                console.log(a, b);
-                displayContent = operate(operator, a, b);
-                console.log(displayContent);
-                numbersTyped = [];
-            }
-            operator = "multiply";
-            break;
-        case 'buttonDiv':
-            numbersTyped.push(displayContent);
-            displayContent = "/";
-            lastDigitClicked = "";
-            if (numbersTyped.length == 2) {
-                let a = parseInt(numbersTyped[0], 10);
-                let b = parseInt(numbersTyped[1], 10);
-                console.log(a, b);
-                displayContent = operate(operator, a, b);
-                console.log(displayContent);
-                numbersTyped = [];
-            }
-            operator = "divide";
-    };
-    if (displayContent.length < 10) {
-        displayContent += lastDigitClicked;
-    };
-    
-    display.textContent = displayContent;
+    evaluateClick (e.target.id);
 });
