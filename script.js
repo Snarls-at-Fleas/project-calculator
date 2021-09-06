@@ -32,11 +32,29 @@ function operate(operator, a, b){
     return result;
 };
 
-// Need to add a way to correctly enter numbers with dec point
-// 
+function evalNumber(numberClicked) {
+    console.log(`Last digit(${numberClicked}) is added to typeBuffer. Display refreshed`);
+    typeBuffer += numberClicked;
+    display.textContent = typeBuffer;
+    // Might need separate variable to store real number, not text
+    // Currently dec point doesn't work
+};
 
-function evaluateClick(id) {
-    switch (id) {
+function evalMath(action) {
+    console.log(`Math action of ${action} is performed. Buffers reset`)
+};
+
+function evalClear () {
+    console.log('All buffers reset. Display reset')
+};
+
+let typeBuffer = ""; // Stores numbers typed till the math button click (Make it an array?)
+let calcBuffer = []; // Stores last two numbers entered. They go here after math button click
+let mathBuffer = ""; // Stores last math action after math button click
+let buttons = document.querySelector(".buttons");
+let display = document.querySelector(".display");
+buttons.addEventListener('click', (e) => {
+    switch (e.target.id) {
         case "buttonOne":
         case "buttonTwo":
         case "buttonThree":
@@ -48,19 +66,24 @@ function evaluateClick(id) {
         case "buttonNine":
         case "buttonZero":
         case "buttonDecPoint":
-            let digitClicked = document.getElementById(id);
-            currentBuffer += digitClicked.textContent;
-            currentNumber = parseFloat(currentBuffer);
-            displayContent.textContent = currentNumber;
-            console.log(currentBuffer, currentNumber);
+            evalNumber(e.target.textContent);
             break;
-    };
-};
-
-let currentNumber = 0;
-let currentBuffer = "";
-let displayContent = document.querySelector(".display");
-let buttons = document.querySelector('.buttons');
-buttons.addEventListener('click', (e) => {
-    evaluateClick (e.target.id);
+        case "buttonAdd":
+        case "buttonSub":
+        case "buttonMulty":
+        case "buttonDiv":
+        case "buttonEquals":
+            evalMath(e.target.id);
+            break;
+        case "buttonClear":
+            evalClear();
+    }
+    // There are three possible variants of clicks: numbers (including dec point), 
+    // math (including equals) & clear
+    //
+    // evalNumber() function adds last number typed to typeBuffer then refreshes display
+    // evalMath() function checks if there an action in mathBuffer, if yes - calls operate()
+        // then resets the mathBuffer and puts last action clicked in it
+        // unless it was Equals button then no action is added
+    // evalClear() function resets all buffers & refreshes display
 });
